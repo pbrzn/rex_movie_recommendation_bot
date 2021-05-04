@@ -16,7 +16,6 @@ PLATFORMS
 
 DEPENDENCIES
   nokogiri
-  pry
   require_all (~> 1.0)
 
 BUNDLED WITH
