@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "rex_movie_recommendation_bot/version"
+require_relative "./version"
 
 module RexMovieRecommendationBot
   class Error < StandardError; end

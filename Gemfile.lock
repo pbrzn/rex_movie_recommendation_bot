@@ -1,14 +1,15 @@
+PATH
+  remote: .
+  specs:
+    rex_movie_recommendation_bot (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
-    coderay (1.1.3)
-    method_source (1.0.0)
     nokogiri (1.11.3-x86_64-darwin)
       racc (~> 1.4)
-    pry (0.14.1)
-      coderay (~> 1.1)
-      method_source (~> 1.0)
     racc (1.5.2)
+    rake (12.3.2)
     require_all (1.5.0)
 
 PLATFORMS
@@ -16,7 +17,9 @@ PLATFORMS
 
 DEPENDENCIES
   nokogiri
+  rake (~> 12.0)
   require_all (~> 1.0)
+  rex_movie_recommendation_bot!
 
 BUNDLED WITH
    2.2.16

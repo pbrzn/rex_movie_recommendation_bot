@@ -9,6 +9,6 @@ gem 'nokogiri'
 
 gem 'require_all',  '~> 1.0'
 
-gem "rake", "~> 13.0"
+gem "rake", "~> 12.0"
 
-gem "rubocop", "~> 1.7"
+#gem "rubocop", "~> 1.7"
