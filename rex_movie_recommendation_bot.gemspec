@@ -9,15 +9,13 @@ Gem::Specification.new do |spec|
   spec.email         = ["pbrennanmusic@gmail.com"]
 
   spec.summary       = "Recommends a movie to you based on a streamer of your choice. You may also choose from available genres for each service."
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/pbrzn/rex_movie_recommendation_bot"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
-
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-  spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+  spec.metadata["source_code_uri"] = "https://github.com/pbrzn/rex_movie_recommendation_bot"
+  spec.metadata["changelog_uri"] = "https://github.com/pbrzn/rex_movie_recommendation_bot/blob/master/CHANGELOG.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
