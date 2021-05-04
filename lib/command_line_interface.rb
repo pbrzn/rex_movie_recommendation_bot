@@ -23,8 +23,12 @@ class CommandLineInterface
       puts "Awesome. I'm happy to help! Please pick a streaming service."
       self.pick_streamer
     else
-      puts "Sorry, that is not a valid option. Please try again."
-      self.prompt
+      begin
+        raise InvalidInputError
+      rescue InvalidInputError => error
+        puts error.message
+        self.prompt
+      end
     end
   end
 
@@ -43,7 +47,16 @@ class CommandLineInterface
       @streamer_input = gets.strip
     else
       @streamer = Streamer.find_or_create_by_name(@streamer_input)
-      self.pick_abc
+      if self.streamer.class != Streamer
+        begin
+          raise InvalidInputError
+        rescue InvalidInputError => error
+          puts error.message
+          self.pick_streamer
+        end
+      else
+        self.pick_abc
+      end
     end
   end
 
@@ -64,13 +77,20 @@ class CommandLineInterface
 
       when "C"
         self.make_recommendation
+
+      else
+        begin
+          raise InvalidInputError
+        rescue InvalidInputError => error
+          puts error.message
+          self.pick_abc
+        end
       end
     end
 
     def list_movies
       num = 1
       movies = Movie.all.select {|movie| movie.streamer == @streamer_input}
-      # binding.pry
       movies.each do |movie|
         puts "#{num}. #{movie.name}"
         num+=1
@@ -83,6 +103,13 @@ class CommandLineInterface
       when "n"
         puts "Okay, why don't you try picking another streaming service..."
         self.pick_streamer
+      else
+        begin
+          raise InvalidInputError
+        rescue InvalidInputError => error
+          puts error.message
+          self.list_movies
+        end
       end
     end
 
@@ -94,7 +121,17 @@ class CommandLineInterface
         num+=1
       end
       @genre_input = gets.strip
-      self.make_recommendation_by_genre
+      if @genre_input != Genre.find_by_name(@genre_input).name
+        begin
+          raise InvalidInputError
+        rescue InvalidInputError => error
+          puts error.message
+          sleep(5)
+          self.list_genres
+        end
+      else
+        self.make_recommendation_by_genre
+      end
     end
 
     def make_recommendation
@@ -115,23 +152,23 @@ class CommandLineInterface
 
     def make_recommendation_by_genre
       genre_movies = self.streamer.movies_by_genre(@genre_input)
-      last = genre_movies.length
-      if last > 1
-        @genre_rec = genre_movies[rand(0..last)]
-      else
-        @genre_rec = genre_movies[0]
-      end
-      puts "Okay, here is your #{@genre_input} film..."
-      puts "..."
-      puts ""
-      puts "\"#{@genre_rec.name}\""
-      puts ""
-      puts "Year: #{@genre_rec.year}"
-      puts "Genre: #{@genre_rec.genre.join(",")}"
-      puts "Runtime: #{@genre_rec.runtime}" unless @genre_rec.runtime == nil
-      puts "Synopsis: \"#{@genre_rec.synopsis}\""
-      puts "..."
-      self.postscript
+        last = genre_movies.length
+        if last > 1
+          @genre_rec = genre_movies[rand(0..last)]
+        else
+          @genre_rec = genre_movies[0]
+        end
+        puts "Okay, here is your #{@genre_input} film..."
+        puts "..."
+        puts ""
+        puts "\"#{@genre_rec.name}\""
+        puts ""
+        puts "Year: #{@genre_rec.year}"
+        puts "Genre: #{@genre_rec.genre.join(",")}"
+        puts "Runtime: #{@genre_rec.runtime}" unless @genre_rec.runtime == nil
+        puts "Synopsis: \"#{@genre_rec.synopsis}\""
+        puts "..."
+        self.postscript
     end
 
     def postscript
@@ -157,6 +194,18 @@ class CommandLineInterface
       when "end"
         puts "Thanks. Enjoy the movie!"
         exit
+      else
+        begin
+          raise InvalidInputError
+        rescue InvalidInputError => error
+          puts error.message
+        end
+      end
+    end
+
+    class InvalidInputError < StandardError
+      def message
+        "Your input is invalid. Please check for spelling, case and/or spaces. Lets try again..."
       end
     end
   end
