@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "lib/rex_movie_recommendation_bot/version"
+require_relative "lib/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "rex_movie_recommendation_bot"
