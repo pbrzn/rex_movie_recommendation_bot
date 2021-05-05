@@ -162,19 +162,15 @@ class CommandLineInterface
   def make_recommendation
     puts "Okay, here is the movie I'd like to recommend to you..."
     last_one = self.streamer.movies.length
-    if last_one > 1
-      @rec = self.streamer.movies[rand(0..last_one)]
-    else
-      @rec = self.streamer.movies[0]
-    end
+    rec = self.streamer.movies[rand(0..last_one)]
     puts "..."
     puts ""
-    puts "\"#{@rec.name}\""
+    puts "\"#{rec.name}\""
     puts ""
-    puts "Year: #{@rec.year}"
-    puts "Genre: #{@rec.genre.join(",")}"
-    puts "Runtime: #{@rec.runtime}" unless @rec.runtime == nil
-    puts "Synopsis: \"#{@rec.synopsis}\""
+    puts "Year: #{rec.year}"
+    puts "Genre: #{rec.genre.join(",")}"
+    puts "Runtime: #{rec.runtime}" unless rec.runtime == nil
+    puts "Synopsis: \"#{rec.synopsis}\""
     puts "..."
     self.postscript
   end
