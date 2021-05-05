@@ -27,12 +27,11 @@ class Scraper
     info = movie.css("div.clearfix")
     info.each do |category|
       if category.css("div.detail-infos__subheading.label").text=="Genres"
-        movie_info[:genre] = category.css("div.detail-infos__detail--values span").text.split(",").delete_if{|i| i==" "}.each {|g| g.strip}
+        movie_info[:genre] = category.css("div.detail-infos__detail--values span").text.split(",").delete_if{|i| i==" "}
       elsif category.css("div.detail-infos__subheading,label").text=="Runtime"
         movie_info[:runtime] = category.css("div.detail-infos__detail--values").text.strip
       end
     end
-
     movie_info[:synopsis] = movie.css("p.text-wrap-pre-line.mt-0 span").text
 
     movie_info
