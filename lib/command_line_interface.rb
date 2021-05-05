@@ -245,7 +245,7 @@ class CommandLineInterface
 
   class InvalidInputError < StandardError
     def message
-      "Your input is invalid. Please check for spelling, case and/or spaces. Lets try again..."
+      "Your input is invalid. Please check for spelling, capitalization and/or spaces. Lets try again..."
     end
   end
 end
