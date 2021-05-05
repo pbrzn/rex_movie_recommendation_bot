@@ -173,7 +173,7 @@ class CommandLineInterface
     puts ""
     puts "Year: #{@rec.year}"
     puts "Genre: #{@rec.genre.join(",")}"
-    puts "Runtime: #{@rec.runtime}" unless rec.runtime == nil
+    puts "Runtime: #{@rec.runtime}" unless @rec.runtime == nil
     puts "Synopsis: \"#{@rec.synopsis}\""
     puts "..."
     self.postscript
