@@ -176,12 +176,12 @@ class CommandLineInterface
   end
 
   def make_recommendation_by_genre
-    genre_movies = self.streamer.movies_by_genre(@genre_input)
-    last = genre_movies.length
+    @genre_movies = self.streamer.movies_by_genre(@genre_input)
+    last = @genre_movies.length
     if last > 1
-      @genre_rec = genre_movies[rand(0..last)]
+      @genre_rec = @genre_movies[rand(0..last)]
     else
-      @genre_rec = genre_movies[0]
+      @genre_rec = @genre_movies[0]
     end
     puts "Okay, here is your #{@genre_input} film..."
     puts "..."
@@ -207,7 +207,7 @@ class CommandLineInterface
     input = gets.strip
     case input
     when "recommend"
-      if @genre_input != nil
+      if @genre_input != nil && @genre_movies.length > 1
         puts "No problem. Do you want to stick with the same genre? (y/n)"
         new_input = gets.strip
         if new_input == "y"
@@ -215,10 +215,20 @@ class CommandLineInterface
         elsif new_input == "n"
           self.abc_prompt
         end
+      elsif @genre_input != nil && @genre_movies.length == 1
+        puts "Unfortunately there is only one #{@genre_input} film on #{@streamer_input}."
+        puts "Would you like to choose a new genre? (y/n)"
+        new_input = gets.strip
+        if new_input == "y"
+          self.list_genres
+        elsif new_input == "n"
+          self.abc_prompt
+        end
       else
         self.make_recommendation
       end
     when "rerun"
+      @genre_input = nil
       self.streamer_prompt
     when "end"
       puts "Thanks. Enjoy the movie!"
