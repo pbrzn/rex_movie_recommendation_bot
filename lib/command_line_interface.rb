@@ -60,6 +60,7 @@ class CommandLineInterface
       end
       self.pick_streamer
     else
+      puts "Okay, just give me one moment..."
       @streamer = Streamer.find_or_create_by_name(@streamer_input)
       self.abc_prompt
     end
@@ -103,7 +104,7 @@ class CommandLineInterface
     num = 1
     movies = Movie.all.select {|movie| movie.streamer == @streamer_input}
     movies.each do |movie|
-      puts "#{num}. #{movie.name}"
+      puts "* #{movie.name}"
       num+=1
     end
     puts "Would you like me to recommend something from this list? (y/n)"
@@ -117,7 +118,7 @@ class CommandLineInterface
       self.make_recommendation
     when "n"
       puts "Okay, why don't you try picking another streaming service..."
-      self.pick_streamer
+      self.streamer_prompt
     when "end"
       puts "Okay, feel free to open me up whenever you need help picking a movie! Goodbye."
       exit
@@ -135,9 +136,10 @@ class CommandLineInterface
     puts "Okay, which genre would you like to choose? Here are your options..."
     num=1
     self.streamer.genres.each do |genre|
-      puts "#{num}. #{genre}"
+      puts "* #{genre}"
       num+=1
     end
+    puts "Please type the name of the genre from which you would like me to base my recommendation below."
     self.pick_genre
   end
 
@@ -161,15 +163,19 @@ class CommandLineInterface
   def make_recommendation
     puts "Okay, here is the movie I'd like to recommend to you..."
     last_one = self.streamer.movies.length
-    rec = self.streamer.movies[rand(1..last_one)]
+    if last_one > 1
+      @rec = self.streamer.movies[rand(0..last_one)]
+    else
+      @rec = self.streamer.movies[0]
+    end
     puts "..."
     puts ""
-    puts "\"#{rec.name}\""
+    puts "\"#{@rec.name}\""
     puts ""
-    puts "Year: #{rec.year}"
-    puts "Genre: #{rec.genre.join(",")}"
-    puts "Runtime: #{rec.runtime}" unless rec.runtime == nil
-    puts "Synopsis: \"#{rec.synopsis}\""
+    puts "Year: #{@rec.year}"
+    puts "Genre: #{@rec.genre.join(",")}"
+    puts "Runtime: #{@rec.runtime}" unless rec.runtime == nil
+    puts "Synopsis: \"#{@rec.synopsis}\""
     puts "..."
     self.postscript
   end
@@ -212,7 +218,7 @@ class CommandLineInterface
         if new_input == "y"
           self.make_recommendation_by_genre
         elsif new_input == "n"
-          self.pick_abc
+          self.abc_prompt
         end
       else
         self.make_recommendation
