@@ -43,7 +43,6 @@ class CommandLineInterface
 
   def pick_streamer
     @streamer_input = gets.strip
-
     if @streamer_input == "list streamers"
       puts "Okay, here are all available streamers as of today..."
       @@all_streamers.each {|streamer| puts "#{streamer}"}
