@@ -17,16 +17,16 @@ class Genre
   end
 
   def self.find_or_create_by_movie(movie)
-    movie.genre.each do |genre|
-      if !self.find_by_name(genre)
-        new_genre=Genre.new(genre.strip)
-        new_genre.movies << movie
-        new_genre.save
-        new_genre
+    movie.genre.each do |g|
+      if !self.find_by_name(g)
+        genre = Genre.new(g.strip).tap do |gen|
+        gen.movies << movie
+        gen.save
+        end
       else
-        genre = self.find_by_name(genre)
-        genre.movies << movie
-        genre
+        genre = self.find_by_name(g).tap do |gen|
+        gen.movies << movie
+        end
       end
     end
   end
