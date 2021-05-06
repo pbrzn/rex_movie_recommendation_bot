@@ -5,7 +5,6 @@ class Streamer
   @@all=[]
 
   def initialize(name)
-    #binding.pry
     @name = name
     @movies = []
     @genres = []
