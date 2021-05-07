@@ -67,8 +67,8 @@ class CommandLineInterface
 
   def abc_prompt
     puts "Great! If you want I can either:"
-    puts "A: List all available movies on #{@streamer_input},"
-    puts "B: List all available movies by genre,"
+    puts "A: List the 30 most popular movies on #{@streamer_input},"
+    puts "B: List all genres available on #{@streamer_input} to help narrow down your choices,"
     puts "or C: Make a recommendation right off the bat!"
     puts "Which option would you like to choose: A, B or C?"
     self.pick_abc
@@ -168,7 +168,7 @@ class CommandLineInterface
     puts "\"#{rec.name}\""
     puts ""
     puts "Year: #{rec.year}"
-    puts "Genre: #{rec.genre.join(",")}"
+    puts "Genre: #{rec.genre.join(", ")}"
     puts "Runtime: #{rec.runtime}" unless rec.runtime == nil
     puts "Synopsis: \"#{rec.synopsis}\""
     puts "..."
@@ -189,7 +189,7 @@ class CommandLineInterface
     puts "\"#{@genre_rec.name}\""
     puts ""
     puts "Year: #{@genre_rec.year}"
-    puts "Genre: #{@genre_rec.genre.join(",")}"
+    puts "Genre: #{@genre_rec.genre.join(", ")}"
     puts "Runtime: #{@genre_rec.runtime}" unless @genre_rec.runtime == nil
     puts "Synopsis: \"#{@genre_rec.synopsis}\""
     puts "..."
