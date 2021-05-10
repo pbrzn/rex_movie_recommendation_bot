@@ -161,8 +161,8 @@ class CommandLineInterface
 
   def make_recommendation
     puts "Okay, here is the movie I'd like to recommend to you..."
-    last_one = self.streamer.movies.length
-    rec = self.streamer.movies[rand(0..last_one)]
+    last = (self.streamer.movies.length-1)
+    rec = self.streamer.movies[rand(0..last)]
     puts "..."
     puts ""
     puts "\"#{rec.name}\""
@@ -177,7 +177,7 @@ class CommandLineInterface
 
   def make_recommendation_by_genre
     @genre_movies = self.streamer.movies_by_genre(@genre_input)
-    last = @genre_movies.length
+    last = (@genre_movies.length-1)
     if last > 1
       @genre_rec = @genre_movies[rand(0..last)]
     else
