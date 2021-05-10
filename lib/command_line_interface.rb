@@ -213,7 +213,7 @@ class CommandLineInterface
         if new_input == "y"
           self.make_recommendation_by_genre
         elsif new_input == "n"
-          self.abc_prompt
+          self.list_genres
         end
       elsif @genre_input != nil && @genre_movies.length == 1
         puts "Unfortunately there is only one #{@genre_input} film on #{@streamer_input}."
