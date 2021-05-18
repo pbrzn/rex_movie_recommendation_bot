@@ -33,9 +33,14 @@ class CommandLineInterface
     end
   end
 
+  def puts_streamers(array)
+    array.each {|streamer| puts "#{streamer}"}
+  end
+
   def streamer_prompt
     puts "Here are some of your options..."
-    @@popular_streamers.each {|streamer| puts "#{streamer}"}
+    # @@popular_streamers.each {|streamer| puts "#{streamer}"}
+    self.puts_streamers(@@popular_streamers)
     puts "If you would like a list of all available streamers, type 'list streamers'..."
     puts "...otherwise please type in the name of the streaming service you would like me to sift through."
     self.pick_streamer
@@ -45,7 +50,8 @@ class CommandLineInterface
     @streamer_input = gets.strip
     if @streamer_input == "list streamers"
       puts "Okay, here are all available streamers as of today..."
-      @@all_streamers.each {|streamer| puts "#{streamer}"}
+      # @@all_streamers.each {|streamer| puts "#{streamer}"}
+      self.puts_streamers(@@all_streamers)
       puts "Which streaming service would you like to choose?"
       self.pick_streamer
     elsif @streamer_input == "end"
@@ -133,11 +139,7 @@ class CommandLineInterface
 
   def list_genres
     puts "Okay, which genre would you like to choose? Here are your options..."
-    num=1
-    self.streamer.genres.each do |genre|
-      puts "* #{genre}"
-      num+=1
-    end
+    self.streamer.genres.each {|genre| puts "* #{genre}" }
     puts "Please type the name of the genre from which you would like me to base my recommendation below."
     self.pick_genre
   end
@@ -159,19 +161,24 @@ class CommandLineInterface
     end
   end
 
+  def recommendation(movie)
+    puts "..."
+    puts ""
+    puts "\"#{movie.name}\""
+    puts ""
+    puts "Year: #{movie.year}"
+    puts "Genre: #{movie.genre.join(", ")}"
+    puts "Runtime: #{movie.runtime}" unless movie.runtime == nil
+    puts "Synopsis: \"#{movie.synopsis}\""
+    puts "..."
+  end
+
+
   def make_recommendation
     puts "Okay, here is the movie I'd like to recommend to you..."
     last = (self.streamer.movies.length-1)
     rec = self.streamer.movies[rand(0..last)]
-    puts "..."
-    puts ""
-    puts "\"#{rec.name}\""
-    puts ""
-    puts "Year: #{rec.year}"
-    puts "Genre: #{rec.genre.join(", ")}"
-    puts "Runtime: #{rec.runtime}" unless rec.runtime == nil
-    puts "Synopsis: \"#{rec.synopsis}\""
-    puts "..."
+    self.recommendation(rec)
     self.postscript
   end
 
@@ -183,16 +190,7 @@ class CommandLineInterface
     else
       @genre_rec = @genre_movies[0]
     end
-    puts "Okay, here is your #{@genre_input} film..."
-    puts "..."
-    puts ""
-    puts "\"#{@genre_rec.name}\""
-    puts ""
-    puts "Year: #{@genre_rec.year}"
-    puts "Genre: #{@genre_rec.genre.join(", ")}"
-    puts "Runtime: #{@genre_rec.runtime}" unless @genre_rec.runtime == nil
-    puts "Synopsis: \"#{@genre_rec.synopsis}\""
-    puts "..."
+    self.recommendation(@genre_rec)
     self.postscript
   end
 
@@ -216,7 +214,7 @@ class CommandLineInterface
           self.list_genres
         end
       elsif @genre_input != nil && @genre_movies.length == 1
-        puts "Unfortunately there is only one #{@genre_input} film on #{@streamer_input}."
+        puts "Unfortunately there is only one #{@genre_input} film on #{@streamer_input}\'s Top 30 list."
         puts "Would you like to choose a new genre? (y/n)"
         new_input = gets.strip
         if new_input == "y"

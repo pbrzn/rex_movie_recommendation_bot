@@ -22,12 +22,12 @@ class Streamer
 
   def create_library
     library = Scraper.streamer_scraper(self.name)
-    library.each do |movie_hash|
+    @movies = library.map do |movie_hash|
       new_movie = Movie.new(movie_hash)
-      @movies << new_movie
+      # @movies << new_movie
       new_movie.save
+      new_movie
     end
-    @movies
   end
 
   def self.find_or_create_by_name(name)
