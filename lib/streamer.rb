@@ -24,7 +24,6 @@ class Streamer
     library = Scraper.streamer_scraper(self.name)
     @movies = library.map do |movie_hash|
       new_movie = Movie.new(movie_hash)
-      # @movies << new_movie
       new_movie.save
       new_movie
     end

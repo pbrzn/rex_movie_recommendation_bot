@@ -39,7 +39,6 @@ class CommandLineInterface
 
   def streamer_prompt
     puts "Here are some of your options..."
-    # @@popular_streamers.each {|streamer| puts "#{streamer}"}
     self.puts_streamers(@@popular_streamers)
     puts "If you would like a list of all available streamers, type 'list streamers'..."
     puts "...otherwise please type in the name of the streaming service you would like me to sift through."
@@ -50,7 +49,6 @@ class CommandLineInterface
     @streamer_input = gets.strip
     if @streamer_input == "list streamers"
       puts "Okay, here are all available streamers as of today..."
-      # @@all_streamers.each {|streamer| puts "#{streamer}"}
       self.puts_streamers(@@all_streamers)
       puts "Which streaming service would you like to choose?"
       self.pick_streamer
