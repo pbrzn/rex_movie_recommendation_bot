@@ -183,7 +183,7 @@ class CommandLineInterface
   def make_recommendation_by_genre
     @genre_movies = self.streamer.movies_by_genre(@genre_input)
     last = (@genre_movies.length-1)
-    if last > 1
+    if last > 0
       @genre_rec = @genre_movies[rand(0..last)]
     else
       @genre_rec = @genre_movies[0]
@@ -210,6 +210,13 @@ class CommandLineInterface
           self.make_recommendation_by_genre
         elsif new_input == "n"
           self.list_genres
+        else
+          begin
+            raise InvalidInputError
+          rescue InvalidInputError => error
+            puts error.message
+            self.postscript_input
+          end
         end
       elsif @genre_input != nil && @genre_movies.length == 1
         puts "Unfortunately there is only one #{@genre_input} film on #{@streamer_input}\'s Top 30 list."
@@ -219,6 +226,13 @@ class CommandLineInterface
           self.list_genres
         elsif new_input == "n"
           self.abc_prompt
+        else
+          begin
+            raise InvalidInputError
+          rescue InvalidInputError => error
+            puts error.message
+            self.postscript_input
+          end
         end
       else
         self.make_recommendation
