@@ -17,13 +17,12 @@ class Scraper
   end
 
   def self.movie_scraper(url)
-
     doc = Nokogiri::HTML(open("https://www.justwatch.com#{url}"))
-    movie = doc.css("div.col-sm-8.col-sm-push-4")
+    movie = doc.css("div.title-block__container")
     movie_info = {}
     name_and_year=movie.css("div.title-block").text.split(/[()]/)
     movie_info[:year] = name_and_year[1]
-    info = movie.css("div.clearfix")
+    info = doc.css("div.detail-infos div.detail-infos__detail div.clearfix")
     info.each do |category|
       if category.css("div.detail-infos__subheading.label").text=="Genres"
         movie_info[:genre] = category.css("div.detail-infos__detail--values span").text.split(",").delete_if{|i| i==" "}.map{|i| i.strip}
@@ -31,7 +30,7 @@ class Scraper
         movie_info[:runtime] = category.css("div.detail-infos__detail--values").text.strip
       end
     end
-    movie_info[:synopsis] = movie.css("p.text-wrap-pre-line.mt-0 span").text
+    movie_info[:synopsis] = doc.css("div.col-sm-8 p.text-wrap-pre-line span").text
     movie_info
   end
 end
